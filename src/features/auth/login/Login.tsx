@@ -1,27 +1,3 @@
-// import React from 'react';
-// import {useAppDispatch} from 'comman/hook/hooks';
-// import {authThunks} from 'features/auth/auth.slice';
-//
-// export const Login = () => {
-//     const dispatch = useAppDispatch();
-//
-//     const loginHandler = () => {
-//         const payload = {
-//             email: "alekseiNemo@mail.com",
-//             password: "09121988",
-//             rememberMe: false,
-//         }
-//         dispatch(authThunks.login(payload));
-//     };
-//
-//     return (
-//         <div>
-//             Login
-//             <button onClick={loginHandler}>login</button>
-//         </div>
-//     );
-// };
-
 import React, { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -51,6 +27,17 @@ const schema = yup.object({
         .required('Password is required')
         .min(7, 'Password must be at least 7 characters'),
 })
+
+
+//     const loginHandler = () => {
+//         const payload = {
+//             email: "alekseiNemo@mail.com",
+//             password: "09121988",
+//             rememberMe: false,
+//         }
+//         dispatch(authThunks.login(payload));
+//     };
+
 
 export const Login = () => {
     const dispatch = useAppDispatch()

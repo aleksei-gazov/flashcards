@@ -1,5 +1,5 @@
 import React, {ButtonHTMLAttributes, DetailedHTMLProps, FC} from 'react';
-import s from
+import s from './Button.module.css'
 
 type DefaultButtonPropsType = DetailedHTMLProps<
     ButtonHTMLAttributes<HTMLButtonElement>,
@@ -17,7 +17,7 @@ const Button: FC<SuperButtonPropsType> = ({
     ...restProps }) => {
     const finalClassName =
         s.button +
-        (disabled ? ` ${s.disabled}` : ' '))
+        (disabled ? ` ${s.disabled}` : ' ')
 
     return (
         <button

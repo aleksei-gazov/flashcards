@@ -1,58 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from 'features/counter/Counter';
-import './App.css';
+import React, {useEffect} from 'react';
+import 'app/App.css';
+import {useAppDispatch, useAppSelector} from 'comman/hook/hooks';
+import {appActions} from './app.slice';
+import {Route, Routes} from 'react-router-dom';
+import {Navigate} from 'features/navigate/Navigate';
+import {Register} from 'features/auth/register/Register';
+import {Login} from 'features/auth/login/Login';
+import Header from 'features/header/Header';
+import {Profile} from 'comman/components/modalProfile/Profile';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+    const isLoading = useAppSelector((state) => state.app.isLoading);
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(appActions.setIsLoading({isLoading: false}));
+        }, 3000);
+    }, []);
+
+    return (
+        <div className="App">
+            <Header/>
+            {isLoading && <h1>Loader...</h1>}
+            <Navigate/>
+            <Routes>
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/register" element={<Register/>}/>
+                {/*<Route path="/password_recovery" element={<PasswordRecovery />} />*/}
+                {/*<Route path="/entering_new_password" element={<NewPassword />} />*/}
+                {/*<Route path="/*" element={<ErrorComponent />} />*/}
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
+
