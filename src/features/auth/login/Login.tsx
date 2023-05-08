@@ -18,6 +18,8 @@ import Button from 'comman/components/button/Button';
 import {authThunks} from 'features/auth/auth.slice';
 import {ArgLoginType} from 'features/auth/auth.api';
 import {useAppDispatch, useAppSelector} from 'comman/hook/hooks';
+import {useActions} from 'comman/hook/useActions';
+import {selectIsLoggedIn} from 'features/auth/auth.selectors';
 
 
 const schema = yup.object({
@@ -41,9 +43,9 @@ const schema = yup.object({
 
 export const Login = () => {
     const dispatch = useAppDispatch()
-    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn);
     const [showPassword, setShowPassword] = useState<boolean>(false)
-
+const {login} = useActions({...authThunks})
     const handleClickShowPassword = () => setShowPassword(show => !show)
 
     const {
@@ -64,7 +66,7 @@ export const Login = () => {
         reset()
     }, [isSubmitSuccessful])
     const onSubmit = (data: ArgLoginType) => {
-        dispatch(authThunks.login(data))
+       login(data)
         reset()
     }
 

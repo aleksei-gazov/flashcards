@@ -23,7 +23,7 @@
 
     .info {
       border: grey solid 2px;
-      width: 100px;
+      width: 150px;
       display: flex;
       flex-direction: row;
       margin: 5px;
@@ -38,21 +38,24 @@
         justify-content: center;
         margin: 0;
 
-        h5,
-        p {
+        h5 {
           border: grey solid 2px;
           margin: 0;
+          color: black;
+        }
+        .avatar {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: rgb(206, 144, 144) solid 2px;
+          font-size: 10px;
+          margin: 0 auto;
         }
       }
-
-      .avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: rgb(206, 144, 144) solid 2px;
-        font-size: 10px;
-        margin: 0 auto;
+      .headButton {
+        border: grey solid 2px;
       }
+
     }
   }
 }

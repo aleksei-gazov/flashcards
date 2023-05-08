@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import {instance} from 'comman/api/comman.api';
 
 export const authApi = {
@@ -8,17 +9,26 @@ export const authApi = {
         return instance.post<ProfileType>('auth/login', arg)
     },
     me: () => {
-        return instance.post<ProfileType>('auth/login', {})
+        return instance.post<'', AxiosResponse<ProfileType>, {}>('auth/me', {})
     },
     updateName: (arg: UpdateUserType) => {
-        return instance.put<ProfileType>('auth/login', arg)
+        return instance.put<ProfileType>('auth/me', arg)
+    },
+    removeMe: () => {
+        return instance.delete<ProfileType>('auth/me', {})
+    },
+    recoveryPassword: (arg: RecoveryPasswordType) => {
+        return instance.post<any>('auth/forgot', arg)
+    },
+    updatePassword: (arg: NewPosswordType) => {
+        return instance.post<any>('auth/set-new-password', arg)
     },
 
 }
 
 
 //Types
-type UpdateUserType = {
+export type UpdateUserType = {
     name: string
     avatar: string
 }
@@ -47,4 +57,17 @@ export type ProfileType = {
     _v: number;
     token: string;
     tokenDeathTime: string
+}
+type NewPosswordType = {
+    password: string
+    resetPasswordToken: string
+}
+
+export type RecoveryPasswordType = {
+    email: string
+    message: any
+}
+export type UpdatePasswordType = {
+    password: string
+    resetPasswordToken: string
 }

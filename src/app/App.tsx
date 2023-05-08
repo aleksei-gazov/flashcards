@@ -1,35 +1,36 @@
 import React, {useEffect} from 'react';
 import 'app/App.css';
-import {useAppDispatch, useAppSelector} from 'comman/hook/hooks';
-import {appActions} from './app.slice';
+import {useAppSelector} from 'comman/hook/hooks';
 import {Route, Routes} from 'react-router-dom';
-import {Navigate} from 'features/navigate/Navigate';
 import {Register} from 'features/auth/register/Register';
 import {Login} from 'features/auth/login/Login';
 import Header from 'features/header/Header';
 import {Profile} from 'comman/components/modalProfile/Profile';
+import {useActions} from 'comman/hook/useActions';
+import {authThunks} from 'features/auth/auth.slice';
+import {selectIsLoggedIn} from 'features/auth/auth.selectors';
+import { Navigate } from 'features/navigate/Navigate';
+import {RecoveryPassoword} from 'features/auth/recoveryPassord/RecoveryPassoword';
 
 function App() {
     const isLoading = useAppSelector((state) => state.app.isLoading);
-
-    const dispatch = useAppDispatch();
-
+    const isLoggedIn = useAppSelector(selectIsLoggedIn);
+    const {authMe} = useActions({...authThunks})
+    console.log(isLoggedIn)
     useEffect(() => {
-        setTimeout(() => {
-            dispatch(appActions.setIsLoading({isLoading: false}));
-        }, 3000);
+        authMe({})
     }, []);
 
     return (
         <div className="App">
             <Header/>
-            {isLoading && <h1>Loader...</h1>}
-            <Navigate/>
+            {/*{isLoading && <h1>Loader...</h1>}*/}
+            <Navigate />
             <Routes>
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
-                {/*<Route path="/password_recovery" element={<PasswordRecovery />} />*/}
+                <Route path="/password_recovery" element={<RecoveryPassoword />} />
                 {/*<Route path="/entering_new_password" element={<NewPassword />} />*/}
                 {/*<Route path="/*" element={<ErrorComponent />} />*/}
             </Routes>

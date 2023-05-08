@@ -3,7 +3,7 @@ import React, {
     DetailedHTMLProps,
     InputHTMLAttributes,
     KeyboardEvent,
-    ReactNode,
+    ReactNode, useEffect, useState,
 } from 'react'
 
 import IconButton from '@mui/material/IconButton'
@@ -24,36 +24,49 @@ type DefaultInputPropsType = DetailedHTMLProps<
 // здесь мы говорим что у нашего инпута будут такие же пропсы как у обычного инпута, кроме type
 // (чтоб не писать value: string, onChange: ...; они уже все описаны в DefaultInputPropsType)
 type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
-    // и + ещё пропсы которых нет в стандартном инпуте
-    onChangeText?: (value: string) => void
-    onEnter?: () => void
+    onEnter?: (value: string) => void
+    onClickHandler?: (value: string) => void
     error?: ReactNode
     spanClassName?: string
+    valueInput: string
 }
 
 export const InputText: React.FC<SuperInputTextPropsType> = ({
-                                                               onChange,
-                                                               onChangeText,
-                                                               onKeyPress,
-                                                               onEnter,
-                                                               error,
-                                                               className,
-                                                               spanClassName,
-                                                               id,
+                                                                 onChange,
+                                                                 onKeyPress,
+                                                                 onEnter,
+                                                                 onClickHandler,
+                                                                 error,
+                                                                 className,
+                                                                 spanClassName,
+                                                                 id,
+                                                                 valueInput,
 
-                                                               ...restProps // все остальные пропсы попадут в объект restProps
-                                                           }) => {
+                                                                 ...restProps // все остальные пропсы попадут в объект restProps
+                                                             }) => {
+
+    const [value, setValue] = useState('')
+
+
+    useEffect(()=> {
+        setValue(valueInput)
+    }, [valueInput])
+
+
+
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange?.(e) // если есть пропс onChange, то передать ему е (поскольку onChange не обязателен)
-
-        onChangeText?.(e.currentTarget.value)
+ setValue(e.currentTarget.value)
     }
     const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>) => {
-        onKeyPress?.(e)
+        // если есть пропс onEnter
+        e.key === 'Enter' &&  onClickHandler &&// и если нажата кнопка Enter
+        onClickHandler(value) // то вызвать его
 
-        onEnter && // если есть пропс onEnter
-        e.key === 'Enter' && // и если нажата кнопка Enter
-        onEnter() // то вызвать его
+    }
+    const onClickHandlers = () => {
+        if (onClickHandler) {
+            onClickHandler(value)
+        }
     }
 
     const finalSpanClassName = s.error + (spanClassName ? ' ' + spanClassName : '')
@@ -68,6 +81,9 @@ export const InputText: React.FC<SuperInputTextPropsType> = ({
             <Input
                 id="standard-adornment-password"
                 type={'text'}
+                onChange={onChangeCallback}
+                onKeyDown={onKeyPressCallback}
+                value={value}
                 endAdornment={
                     <InputAdornment position="end">
                         <IconButton
@@ -75,20 +91,13 @@ export const InputText: React.FC<SuperInputTextPropsType> = ({
                             // onClick={handleClickShowPassword}
                             // onMouseDown={handleMouseDownPassword}
                         >
-                            <Button />
+                            <Button onClick={onClickHandlers}>
+                                SAVE
+                            </Button>
                         </IconButton>
                     </InputAdornment>
                 }
             />
-            {/*<SuperButton />*/}
-            {/*<input*/}
-            {/*  id={id}*/}
-            {/*  type={'text'}*/}
-            {/*  // onChange={onChangeCallback}*/}
-            {/*  // onKeyPress={onKeyPressCallback}*/}
-            {/*  className={finalInputClassName}*/}
-            {/*  {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)*/}
-            {/*/>*/}
             <span id={id ? id + '-span' : undefined} className={finalSpanClassName}>
         {error}
       </span>

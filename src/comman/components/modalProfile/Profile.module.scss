@@ -13,10 +13,12 @@
   .info {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    //justify-content: space-around;
+    margin: 0 auto;
 
     .avatar {
       border-radius: 50%;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -24,17 +26,20 @@
       height: 96px;
       border: grey solid 2px;
 
-      p {
-      }
+      //p {
+      //}
     }
 
     .info_data {
       width: 100%;
-      border: grey solid 10px;
+      height: 135px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
+      margin-top: 10px;
+      .email {
+      }
     }
   }
 }

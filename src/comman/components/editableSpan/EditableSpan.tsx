@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState } from 'react'
+import React, {DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState} from 'react'
 
 import editIcon from './editIcon.svg'
 import s from './EditableSpan.module.css'
@@ -19,38 +19,33 @@ type SuperEditableSpanType = Omit<DefaultInputPropsType, 'type'> & {
     onChangeText?: (value: string) => void
     onEnter?: () => void
     error?: string
-
+    onSubmitHandler?: (value: string) => void
     spanProps?: DefaultSpanPropsType & { defaultText?: string } // пропсы для спана
 }
 
 export const EditableSpan: React.FC<SuperEditableSpanType> = ({
-                                                                autoFocus,
-                                                                onBlur,
-                                                                onEnter,
-                                                                spanProps,
+                                                                  autoFocus,
+                                                                  onBlur,
+                                                                  onEnter,
+                                                                  spanProps,
+                                                                  onSubmitHandler,
 
-                                                                ...restProps // все остальные пропсы попадут в объект restProps
-                                                            }) => {
+                                                                  ...restProps // все остальные пропсы попадут в объект restProps
+                                                              }) => {
     const [editMode, setEditMode] = useState<boolean>(false)
-    const { children, onDoubleClick, className, defaultText, ...restSpanProps } = spanProps || {}
+    const {children, onDoubleClick, className, defaultText, ...restSpanProps} = spanProps || {}
 
-    const onEnterCallback = () => {
-        // выключить editMode при нажатии Enter // делают студенты
-        setEditMode(!editMode)
-        onEnter?.()
-    }
-
-    const onBlurCallback = (e: React.FocusEvent<HTMLInputElement>) => {
-        // выключить editMode при нажатии за пределами инпута // делают студенты
-        setEditMode(!editMode)
-        onBlur?.(e)
+    const onClickCallback = (value: string) => {
+        if (onSubmitHandler) {
+            onSubmitHandler(value)
+            setEditMode(!editMode)
+        }
     }
 
     const onDoubleClickCallBack = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         // включить editMode при двойном клике // делают студенты
         setEditMode(!editMode)
         onDoubleClick?.(e)
-        console.log('gg')
     }
 
     const spanClassName = s.span + (className ? ' ' + className : '')
@@ -60,10 +55,11 @@ export const EditableSpan: React.FC<SuperEditableSpanType> = ({
             {editMode ? (
                 <InputText
                     autoFocus={autoFocus || true}
-                    onBlur={onBlurCallback}
-                    onEnter={onEnterCallback}
+                    onClickHandler={onClickCallback}
                     className={s.input}
+                    valueInput={restProps.value as string}
                     {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
+
                 />
             ) : (
                 <div className={s.spanBlock}>
