@@ -20,7 +20,7 @@ import * as yup from 'yup'
 import Button from 'comman/components/button/Button'
 
 import {useAppDispatch, useAppSelector} from 'comman/hook/hooks';
-import {authThunks} from 'features/auth/auth.slice';
+import {authThunks} from 'features/auth/authSlice';
 
 type FormData = yup.InferType<typeof schema>
 
@@ -66,7 +66,7 @@ export const Register = () => {
     })
 
     useEffect(() => {
-        ;(errors.password || errors.confirmPassword || isError) &&
+        (errors.password || errors.confirmPassword || isError) &&
         reset({password: '', confirmPassword: ''})
     }, [reset, isError, errors.password, errors.confirmPassword])
 

@@ -2,13 +2,14 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
     ArgLoginType,
     ArgRegisterType,
-    authApi,
+    NewPosswordType,
     ProfileType,
     RecoveryPasswordType,
-    UpdateUserType,
-} from 'features/auth/auth.api';
+    UpdateUserType, UserBlockType,
+} from 'features/auth/authTypes';
 import {createAppAsyncThunk} from 'comman/utils/create-app-async-thunk';
 import {thunkTryCatch} from 'comman/utils/thunk-try-catch';
+import { authApi } from './auth.api';
 
 const authMe = createAppAsyncThunk<{ profile: ProfileType }, any>(
     'auth/authMe',
@@ -40,7 +41,7 @@ const register = createAppAsyncThunk<{ profile: ProfileType }, ArgRegisterType>(
         const {dispatch} = thunkAPI
         return thunkTryCatch(thunkAPI, async () => {
             const res = await authApi.register(arg);
-            dispatch(authAction.isLoggedIn(true))
+            dispatch(authAction.isRegistered(true))
         });
     }
 );
@@ -64,11 +65,22 @@ const recoveryPassword = createAppAsyncThunk<void, RecoveryPasswordType>(
     }
 );
 
-const updatePassword = createAppAsyncThunk<void, RecoveryPasswordType>(
+const updatePassword = createAppAsyncThunk<void, NewPosswordType>(
     'auth/register',
     async (arg, thunkAPI) => {
+        const {dispatch} = thunkAPI
         return thunkTryCatch(thunkAPI, async () => {
-            await authApi.recoveryPassword(arg);
+            await authApi.newPassword(arg);
+            dispatch(authAction.isLoggedIn(false))
+        });
+    }
+);
+const userBlock = createAppAsyncThunk<void, UserBlockType>(
+    'auth/userBlock',
+    async (arg, thunkAPI) => {
+        const {dispatch} = thunkAPI
+        return thunkTryCatch(thunkAPI, async () => {
+            await authApi.blockUser(arg);
         });
     }
 );
@@ -85,21 +97,18 @@ const slice = createSlice({
         isLoggedIn: (state, action: PayloadAction<boolean>) => {
             state.isLoggedIn = action.payload
         },
+        isRegistered: (state, action: PayloadAction<boolean>) => {
+            state.isRegistered = action.payload
+        },
     },
     extraReducers: (builder) => {
         builder
-            // .addCase(login.fulfilled, (state, action) => {
-            //     state.profile = action.payload.profile;
-            // })
             .addCase(authMe.fulfilled, (state, action) => {
                 state.profile = action.payload.profile;
             })
-            // .addCase(register.fulfilled, (state, action) => {
-            //     state.profile = action.payload.profile;
-            // })
-            // .addCase(updateName.fulfilled, (state, action) => {
-            //     state.profile = action.payload.profile;
-            // })
+            .addCase(updateName.fulfilled, (state, action) => {
+                state.profile = action.payload.profile;
+            })
     },
 });
 

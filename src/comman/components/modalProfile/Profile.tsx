@@ -7,7 +7,7 @@ import s from './Profile.module.scss'
 import Button from 'comman/components/button/Button';
 import {EditableSpan} from 'comman/components/editableSpan/EditableSpan';
 import {useActions} from 'comman/hook/useActions';
-import {authThunks} from 'features/auth/auth.slice';
+import {authThunks} from 'features/auth/authSlice';
 import {useAppSelector} from 'comman/hook/hooks';
 import {selectIsLoggedIn, selectProfile} from 'features/auth/auth.selectors';
 import {Navigate} from 'react-router-dom';

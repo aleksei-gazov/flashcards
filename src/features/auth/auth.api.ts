@@ -1,5 +1,13 @@
 import { AxiosResponse } from 'axios';
-import {instance} from 'comman/api/comman.api';
+import {instance, instanceRec} from 'comman/api/comman.api';
+import {
+    ArgLoginType,
+    ArgRegisterType, NewPosswordType,
+    ProfileType,
+    RecoveryPasswordType,
+    RegisterResponseType,
+    UpdateUserType, UserBlockType
+} from 'features/auth/authTypes';
 
 export const authApi = {
     register: (arg: ArgRegisterType) => {
@@ -18,56 +26,18 @@ export const authApi = {
         return instance.delete<ProfileType>('auth/me', {})
     },
     recoveryPassword: (arg: RecoveryPasswordType) => {
-        return instance.post<any>('auth/forgot', arg)
+        return instanceRec.post<any>('auth/forgot', arg)
     },
-    updatePassword: (arg: NewPosswordType) => {
-        return instance.post<any>('auth/set-new-password', arg)
+    newPassword: (arg: NewPosswordType) => {
+        return instanceRec.post<any>('auth/set-new-password', arg)
+    },
+    blockUser: (arg: UserBlockType) => {
+        return instance.post<any>('auth/block', arg)
     },
 
 }
 
 
 //Types
-export type UpdateUserType = {
-    name: string
-    avatar: string
-}
-export type ArgLoginType = {
-    email: string;
-    password: string;
-    rememberMe: boolean;
-};
 
-export type ArgRegisterType = Omit<ArgLoginType, 'rememberMe'>
 
-export type RegisterResponseType = {
-    addedUser: Omit<ProfileType, 'token' | 'tokenDeathTime'>
-}
-
-export type ProfileType = {
-    _id: string;
-    email: string;
-    rememberMe: boolean;
-    isAdmin: boolean;
-    name: string;
-    verified: boolean;
-    publicCardPacksCount: number;
-    created: Date;
-    updated: Date;
-    _v: number;
-    token: string;
-    tokenDeathTime: string
-}
-type NewPosswordType = {
-    password: string
-    resetPasswordToken: string
-}
-
-export type RecoveryPasswordType = {
-    email: string
-    message: any
-}
-export type UpdatePasswordType = {
-    password: string
-    resetPasswordToken: string
-}

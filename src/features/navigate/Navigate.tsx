@@ -9,7 +9,9 @@ export const Navigate = () => {
             <NavLink to={'/login'}>Login</NavLink>---
             <NavLink to={'/register'}>Register</NavLink>---
             <NavLink to={'/password_recovery'}>Password recovery</NavLink>---
+            <NavLink to={'/check'}>Check email</NavLink>---
             <NavLink to={'/entering_new_password'}>New password</NavLink>---
+            <NavLink to={'/packs_list'}>Packs</NavLink>---
         </div>
     )
 }

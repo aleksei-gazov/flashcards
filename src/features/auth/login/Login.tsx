@@ -15,8 +15,8 @@ import * as yup from 'yup'
 
 import Button from 'comman/components/button/Button';
 
-import {authThunks} from 'features/auth/auth.slice';
-import {ArgLoginType} from 'features/auth/auth.api';
+import {authThunks} from 'features/auth/authSlice';
+import {ArgLoginType} from 'features/auth/authTypes';
 import {useAppDispatch, useAppSelector} from 'comman/hook/hooks';
 import {useActions} from 'comman/hook/useActions';
 import {selectIsLoggedIn} from 'features/auth/auth.selectors';

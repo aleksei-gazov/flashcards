@@ -1,43 +1,37 @@
 import React, {useEffect, useState} from 'react'
 
 import {yupResolver} from '@hookform/resolvers/yup'
-import {InputLabel, Paper, Typography} from '@mui/material'
+import {IconButton, InputAdornment, InputLabel, Paper, Typography} from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
 import Grid from '@mui/material/Grid'
 import Input from '@mui/material/Input'
 import {useForm} from 'react-hook-form'
-import {Navigate, NavLink} from 'react-router-dom'
+import {Navigate, useParams} from 'react-router-dom'
 import * as yup from 'yup'
 
 import Button from 'comman/components/button/Button';
 
 import {authThunks} from 'features/auth/authSlice';
-import {ArgLoginType} from 'features/auth/authTypes';
-import {useAppDispatch, useAppSelector} from 'comman/hook/hooks';
+import {useAppSelector} from 'comman/hook/hooks';
 import {useActions} from 'comman/hook/useActions';
 import {selectIsLoggedIn} from 'features/auth/auth.selectors';
+import {Visibility, VisibilityOff} from '@mui/icons-material';
 
 
 const schema = yup.object({
-    email: yup.string().required('Email is required').email()
+    password: yup
+        .string()
+        .required('Password is required')
+        .min(7, 'Password must be at least 7 characters'),
 })
 
-
-//     const loginHandler = () => {
-//         const payload = {
-//             email: "alekseiNemo@mail.com",
-//             password: "09121988",
-//             rememberMe: false,
-//         }
-//         dispatch(authThunks.login(payload));
-//     };
-
-
-export const RecoveryPassoword = () => {
+export const NewPassword = () => {
+    let { resetPasswordToken } = useParams()
+    const [showPassword, setShowPassword] = useState<boolean>(false)
     const isLoggedIn = useAppSelector(selectIsLoggedIn);
-    const {recoveryPassword} = useActions({...authThunks})
-
+    const {updatePassword} = useActions({...authThunks})
+    const handleClickShowPassword = () => setShowPassword(show => !show)
     const {
         register,
         handleSubmit,
@@ -45,7 +39,7 @@ export const RecoveryPassoword = () => {
         reset,
     } = useForm({
         defaultValues: {
-            email: ''
+            password: '',
         },
         resolver: yupResolver(schema),
     })
@@ -53,11 +47,11 @@ export const RecoveryPassoword = () => {
     useEffect(() => {
         reset()
     }, [isSubmitSuccessful])
+
     const onSubmit = (data: any) => {
-        recoveryPassword(data.email)
+        updatePassword({ password: data.password, resetPasswordToken})
         reset()
     }
-
 
     return (
         <Grid container justifyContent={'center'} textAlign={'center'} alignItems={'center'}>
@@ -68,7 +62,7 @@ export const RecoveryPassoword = () => {
                         component="h1"
                         sx={{fontSize: '26px', fontWeight: '600'}}
                     >
-                        Forgot your password?
+                        Create new password
                     </Typography>
                     <form
                         onSubmit={handleSubmit(data => {
@@ -77,9 +71,23 @@ export const RecoveryPassoword = () => {
                     >
                         <FormGroup sx={{alignItems: 'center', fontSize: '16px', fontWeight: '500'}}>
                             <FormControl sx={{width: '35ch'}} variant="standard">
-                                <InputLabel htmlFor="standard-adornment-password">Email</InputLabel>
-                                <Input id="standard-adornment-password" type={'text'} {...register('email')} />
-                                <p style={{color: 'red', fontSize: '12px'}}>{errors.email?.message}</p>
+                                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                                <Input
+                                    id="standard-adornment-password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    {...register('password')}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                            >
+                                                {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                                <p style={{color: 'red', fontSize: '12px'}}>{errors.password?.message}</p>
                             </FormControl>
                             <Typography
                                 fontSize={'14px'}
@@ -88,8 +96,8 @@ export const RecoveryPassoword = () => {
                                 variant={'caption'}
                                 margin={'30px 0 10px'}
                             >
-                                Enter your email address and we will send you <br/>
-                                further instructions
+                                Create new password and we will send you <br/>
+                                further instructions to email
                             </Typography>
                             <Button
                                 type={'submit'}
@@ -102,20 +110,8 @@ export const RecoveryPassoword = () => {
                                     fontWeight: '500',
                                 }}
                             >
-                                Send Instructions
+                                Create new password
                             </Button>
-                            <Typography
-                                fontSize={'14px'}
-                                fontWeight={'500'}
-                                color={'#0000008a'}
-                                variant={'caption'}
-                                margin={'30px 0 10px'}
-                            >
-                                Did you remember your password?
-                            </Typography>
-                            <NavLink to={'/login'} style={{fontSize: '16px', fontWeight: '600'}}>
-                                Try logging in
-                            </NavLink>
                         </FormGroup>
                     </form>
                 </FormControl>
