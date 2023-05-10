@@ -10,6 +10,7 @@ import {
 import {createAppAsyncThunk} from 'comman/utils/create-app-async-thunk';
 import {thunkTryCatch} from 'comman/utils/thunk-try-catch';
 import { authApi } from './auth.api';
+import {packsThunks} from 'features/packs/packsSlice';
 
 const authMe = createAppAsyncThunk<{ profile: ProfileType }, any>(
     'auth/authMe',
@@ -17,7 +18,7 @@ const authMe = createAppAsyncThunk<{ profile: ProfileType }, any>(
         const {dispatch} = thunkAPI
         return thunkTryCatch(thunkAPI, async () => {
             const res = await authApi.me();
-            console.log(res)
+            dispatch(packsThunks.getPacksList({}))
             dispatch(authAction.isLoggedIn(true))
             return {profile: res.data};
         });

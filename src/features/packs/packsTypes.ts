@@ -1,3 +1,4 @@
+import {date} from 'yup';
 
 
 export type GetPacksType = {
@@ -29,3 +30,22 @@ export type SearchParamsType = {
     minCardsCount: number
     maxCardsCount: number
 }
+
+export type PacksType = {
+    _id: string
+    user_id:  string
+    name:  string
+    cardsCount: number
+    created: string
+    updated: string
+}
+
+export type ResponsGetPacks = {
+    cardPacks:  PacksType[],
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    page: number
+    pageCount: number
+}
+
