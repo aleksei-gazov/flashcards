@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {instance, instanceRec} from 'comman/api/comman.api';
-import {ResponsGetPacks, SearchParamsType} from 'features/packs/packsTypes';
+import {CreatePack, DeletePack, ResponsGetPacks, SearchParamsType, UpdatePack} from 'features/packs/packsTypes';
 
 export const packsAPI = {
     getPacks: (arg: SearchParamsType) => {
@@ -16,28 +16,16 @@ export const packsAPI = {
             },
         })
     },
-    createPacks: (arg: any) => {
+    createPacks: (arg: CreatePack) => {
         return instance.post<any>('cards/pack ', arg)
     },
-    deletePacks: (arg: any) => {
-        return instance.delete<any>('cards/pack ', arg)
+    deletePacks: (arg: DeletePack) => {
+        return instance.delete<any>(`cards/pack?id=${arg._id}`)
     },
-    updatePacks: (arg: any) => {
+    updatePacks: (arg: UpdatePack) => {
         return instance.put<any>('cards/pack ', arg)
     },
 
 }
-
-// return instance.get<GetPacksResponseType>('cards/pack', {
-//     params: {
-//         packName: params.packName,
-//         min: params.min,
-//         max: params.max,
-//         sortPacks: params.sortPack,
-//         page: params.page,
-//         pageCount: params.pageCount,
-//         user_id: params.user_id,
-//     },
-// })
 
 

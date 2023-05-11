@@ -20,6 +20,7 @@ const authMe = createAppAsyncThunk<{ profile: ProfileType }, any>(
             const res = await authApi.me();
             dispatch(packsThunks.getPacksList({}))
             dispatch(authAction.isLoggedIn(true))
+            // console.log(res.data)
             return {profile: res.data};
         });
     }

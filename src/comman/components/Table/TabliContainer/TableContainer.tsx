@@ -1,6 +1,6 @@
 
 import React, {FC, ReactNode} from 'react';
-import {Table} from 'comman/components/Table/Table';
+import Table from '@mui/material/Table';
 
 type TableContainerrType = {
     children: ReactNode

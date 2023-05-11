@@ -1,4 +1,4 @@
-import {date} from 'yup';
+import {boolean, date} from 'yup';
 
 
 export type GetPacksType = {
@@ -48,4 +48,24 @@ export type ResponsGetPacks = {
     page: number
     pageCount: number
 }
+
+
+export type CreatePack =  {
+    cardsPack: {
+        name: string
+        deckCover?: string
+        private?: boolean
+    }
+}
+export type UpdatePack =  {
+    cardsPack: {
+        _id: string
+        name: string
+    }
+}
+
+export type DeletePack = {
+    _id: string
+}
+
 
