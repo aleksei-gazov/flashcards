@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import TableBody from '@mui/material/TableBody';
 import {styled} from '@mui/material/styles';
 import TableCell, {tableCellClasses} from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import {PacksType} from 'features/packs/packsTypes';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -44,19 +45,23 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
+type TableBodyType = {
+    cardPacks?: PacksType[]
+}
 
-export const TBody = () => {
+export const TBody: FC<TableBodyType> = ({cardPacks}) => {
+    console.log(cardPacks)
     return (
         <TableBody>
-            {rows.map((row) => (
-                <StyledTableRow key={row.name}>
+            {cardPacks?.map((row) => (
+                <StyledTableRow key={row._id}>
                     <StyledTableCell component="th" scope="row">
                         {row.name}
                     </StyledTableCell>
-                    <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                    <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                    <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                    <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                    <StyledTableCell align="right">{row.name}</StyledTableCell>
+                    <StyledTableCell align="right">{row.created}</StyledTableCell>
+                    <StyledTableCell align="right">{row.updated}</StyledTableCell>
+                    <StyledTableCell align="right">{row.updated}</StyledTableCell>
                 </StyledTableRow>
             ))}
         </TableBody>

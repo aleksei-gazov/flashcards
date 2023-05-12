@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {styled} from '@mui/material/styles';
 import TableCell, {tableCellClasses} from '@mui/material/TableCell';
+import {HeadPacksType} from 'features/packs/packsTypes';
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -14,39 +15,19 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
     },
 }));
 
-const StyledTableRow = styled(TableRow)(({theme}) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
-
-function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-) {
-    return {name, calories, fat, carbs, protein};
+type THeadType = {
+    headPacksTable?: HeadPacksType[]
 }
 
-// type THeadType = {
-//     packList:
-// }
-
-export const THead = () => {
+export const THead:FC<THeadType> = ({headPacksTable}) => {
     return (
         <TableHead>
             <TableRow>
-                <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-                <StyledTableCell align="right">Calories</StyledTableCell>
-                <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-                <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-                <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+                {headPacksTable?.map(h=> {
+                    return (
+                        <StyledTableCell>{h.title}</StyledTableCell>
+                    )
+                })}
             </TableRow>
         </TableHead>
     );

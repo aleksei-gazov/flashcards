@@ -33,15 +33,15 @@ export type SearchParamsType = {
 
 export type PacksType = {
     _id: string
-    user_id:  string
-    name:  string
+    user_id: string
+    name: string
     cardsCount: number
     created: string
     updated: string
 }
 
 export type ResponsGetPacks = {
-    cardPacks:  PacksType[],
+    cardPacks: PacksType[],
     cardPacksTotalCount: number
     maxCardsCount: number
     minCardsCount: number
@@ -50,14 +50,14 @@ export type ResponsGetPacks = {
 }
 
 
-export type CreatePack =  {
+export type CreatePack = {
     cardsPack: {
         name: string
         deckCover?: string
         private?: boolean
     }
 }
-export type UpdatePack =  {
+export type UpdatePack = {
     cardsPack: {
         _id: string
         name: string
@@ -66,6 +66,12 @@ export type UpdatePack =  {
 
 export type DeletePack = {
     _id: string
+}
+
+export type HeadPacksType = {
+    title: string
+    status: number
+    sortName?: string
 }
 
 

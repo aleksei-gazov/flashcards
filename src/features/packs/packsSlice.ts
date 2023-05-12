@@ -2,10 +2,10 @@ import {createSlice} from '@reduxjs/toolkit';
 import {createAppAsyncThunk} from 'comman/utils/create-app-async-thunk';
 import {thunkTryCatch} from 'comman/utils/thunk-try-catch';
 import {packsAPI} from 'features/packs/packsAPI';
-import {CreatePack, DeletePack, PacksType, ResponsGetPacks, UpdatePack} from 'features/packs/packsTypes';
+import {CreatePack, DeletePack, HeadPacksType, PacksType, ResponsGetPacks, UpdatePack} from 'features/packs/packsTypes';
 
 
-const packList = [
+const packList: HeadPacksType[] = [
     { title: 'Name', status: 0, sortName: 'name' },
     { title: 'Cards', status: 0, sortName: 'cardsCount' },
     { title: 'Last Updated', status: 0, sortName: 'updated' },
@@ -21,6 +21,7 @@ const getPacksList = createAppAsyncThunk<ResponsGetPacks, any>(
         const params = getState().packs.searchParams
         return thunkTryCatch(thunkAPI, async () => {
             let res = await packsAPI.getPacks(params);
+            console.log(res.data.cardPacks)
             return {cardPacks: res.data.cardPacks}
         })
     }
@@ -62,6 +63,7 @@ const slice = createSlice({
     name: 'packs',
     initialState: {
         cardPacks: [] as PacksType[],
+        packListTitle: packList,
         searchParams: {
             user_id: '',
             packName: '',
