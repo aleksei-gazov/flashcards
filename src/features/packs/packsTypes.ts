@@ -19,16 +19,16 @@ export type GetPacksType = {
 }
 
 export type SearchParamsType = {
-    packName: string
-    user_id: string
-    page: number
-    pageCount: number
-    min: number
-    max: number
-    sortPack: string
-    totalPagesCount: number
-    minCardsCount: number
-    maxCardsCount: number
+    packName?: string
+    user_id?: string
+    page?: number
+    pageCount?: number
+    min?: number
+    max?: number
+    sortPack?: string
+    totalPagesCount?: number
+    minCardsCount?: number
+    maxCardsCount?: number
 }
 
 export type PacksType = {

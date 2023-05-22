@@ -1,8 +1,16 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {createAppAsyncThunk} from 'comman/utils/create-app-async-thunk';
 import {thunkTryCatch} from 'comman/utils/thunk-try-catch';
 import {packsAPI} from 'features/packs/packsAPI';
-import {CreatePack, DeletePack, HeadPacksType, PacksType, ResponsGetPacks, UpdatePack} from 'features/packs/packsTypes';
+import {
+    CreatePack,
+    DeletePack,
+    HeadPacksType,
+    PacksType,
+    ResponsGetPacks,
+    SearchParamsType,
+    UpdatePack
+} from 'features/packs/packsTypes';
 
 
 const packList: HeadPacksType[] = [
@@ -14,13 +22,11 @@ const packList: HeadPacksType[] = [
 ]
 
 
-const getPacksList = createAppAsyncThunk<ResponsGetPacks, any>(
+const getPacksList = createAppAsyncThunk<ResponsGetPacks, SearchParamsType>(
     'packs/getPacksList',
-    async (_, thunkAPI) => {
-        const {dispatch, getState} = thunkAPI
-        const params = getState().packs.searchParams
+    async (arg, thunkAPI) => {
         return thunkTryCatch(thunkAPI, async () => {
-            let res = await packsAPI.getPacks(params);
+            let res = await packsAPI.getPacks(arg);
             console.log(res.data.cardPacks)
             return {cardPacks: res.data.cardPacks}
         })
@@ -77,7 +83,12 @@ const slice = createSlice({
             maxCardsCount: 0,
         }
     },
-    reducers: {},
+    reducers: {
+        setUserId: (state, action: PayloadAction<string>) => {
+            console.log(action.payload)
+            state.searchParams.user_id = action.payload
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getPacksList.fulfilled, (state, action) => {
@@ -85,5 +96,6 @@ const slice = createSlice({
             })
     }
 })
+export const packsAction = slice.actions
 export const packsReducer = slice.reducer;
 export const packsThunks = {getPacksList, createPacksList};

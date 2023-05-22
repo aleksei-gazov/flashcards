@@ -5,7 +5,7 @@ import Button from 'comman/components/button/Button';
 type Props = {
     title: string
     titleButton: string
-    onClickHandler: ()=> void
+    onClickHandler: () => void
 }
 
 
@@ -16,7 +16,11 @@ const PaksHeader: FC<Props> = ({title, titleButton, onClickHandler}) => {
                 <h3>{title}</h3>
             </div>
             <div className={s.button}>
-                <Button onClick={onClickHandler}>
+                <Button
+                    widthButton={'113px'}
+                    heightButton={'36px'}
+                    onClick={onClickHandler}
+                >
                     {titleButton}
                 </Button>
             </div>

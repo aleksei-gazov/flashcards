@@ -18,7 +18,6 @@ const authMe = createAppAsyncThunk<{ profile: ProfileType }, any>(
         const {dispatch} = thunkAPI
         return thunkTryCatch(thunkAPI, async () => {
             const res = await authApi.me();
-            dispatch(packsThunks.getPacksList({}))
             dispatch(authAction.isLoggedIn(true))
             // console.log(res.data)
             return {profile: res.data};
@@ -91,7 +90,7 @@ const slice = createSlice({
     name: 'auth',
     initialState: {
         profile: {} as ProfileType,
-        isLoggedIn: false,
+        isLoggedIn: false as boolean,
         isRegistered: false as boolean,
         isError: null as string | null | undefined,
     },

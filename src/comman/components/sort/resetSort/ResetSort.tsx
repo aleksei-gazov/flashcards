@@ -9,8 +9,7 @@ export const ResetSort = () => {
     }
 
     return (
-        <div>
-            <h4>Res</h4>
+        <div className={s.container}>
             <FilterAltOffIcon onClick={resetSearchParamsHandler} color="primary" className={s.reset} />
         </div>
     );

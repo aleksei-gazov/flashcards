@@ -8,13 +8,19 @@ type DefaultButtonPropsType = DetailedHTMLProps<
 
 type SuperButtonPropsType = DefaultButtonPropsType & {
     xType?: string
+    widthButton: string | number
+    heightButton: string | number
 }
 
 const Button: FC<SuperButtonPropsType> = ({
-    xType,
-    className,
-    disabled,
-    ...restProps }) => {
+                                              xType,
+                                              className,
+                                              disabled,
+                                              widthButton,
+                                              heightButton,
+
+                                              ...restProps
+                                          }) => {
     const finalClassName =
         s.button +
         (disabled ? ` ${s.disabled}` : ' ')
@@ -22,10 +28,11 @@ const Button: FC<SuperButtonPropsType> = ({
     return (
         <button
             disabled={disabled}
-            className={finalClassName}
+            style={{width: `${widthButton}`, height: `${heightButton}` }}
+                // className={finalClassName}
             {...restProps} // отдаём кнопке остальные пропсы если они есть (children там внутри)
-        />
-    );
-};
+                />
+                );
+            };
 
 export default Button;

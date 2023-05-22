@@ -59,11 +59,12 @@ navigate('/login')
                         example@mail.com
                     </Typography>
                     <Button
+                        widthButton={'100%'}
+                        heightButton={'36px'}
                         onClick={onClickHandler}
                         style={{
                             borderRadius: '30px',
                             marginTop: '40px',
-                            width: '100%',
                             padding: '17px 0',
                             fontSize: '16px',
                             fontWeight: '500',

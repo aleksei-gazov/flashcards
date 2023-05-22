@@ -2,6 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import s from './Range.module.scss'
+import Input from '../input/Input';
+
+
 function valuetext(value: number) {
     return `${value}°C`;
 }
@@ -53,7 +56,9 @@ export const Range = () => {
 
     return (
         <div className={s.container}>
-            <Box sx={{ width: 200 }}>
+
+           <Input typeProps={'text'} value={value1[0]}/>
+            <Box sx={{ width: 160, margin:'7px 15px 0 15px' }}>
                 <Slider
                     getAriaLabel={() => 'Minimum distance'}
                     value={value1}
@@ -63,6 +68,7 @@ export const Range = () => {
                     disableSwap
                 />
             </Box>
+            <Input typeProps={'text'} value={value1[1]}/>
         </div>
 
     );

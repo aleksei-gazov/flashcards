@@ -25,7 +25,10 @@ const Header = () => {
                     </div>
                     :
                     <div className={s.headButton}>
-                        <Button>
+                        <Button
+                            widthButton={'113px'}
+                            heightButton={'36px'}
+                        >
                             Sing In
                         </Button>
                     </div>

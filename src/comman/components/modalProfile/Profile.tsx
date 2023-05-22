@@ -45,7 +45,8 @@ export const Profile = () => {
                     <div className={s.info_data}>
                         <EditableSpan value={profile.name} onSubmitHandler={renameHandler}/>
                         <p className={s.email}>{profile.email}</p>
-                        <Button
+                        <Button heightButton={'36px'}
+                                widthButton={'127px'}
                             onClick={logOutHandler}
                             style={{
                                 display: 'flex',
@@ -55,8 +56,6 @@ export const Profile = () => {
                                 boxShadow:
                                     '0px 2px 10px rgba(109, 109, 109, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
                                 borderRadius: '30px',
-                                width: '127px',
-                                height: '36px',
                                 margin: '10px 0',
                                 fontSize: '16px',
                                 fontWeight: '500',
@@ -65,7 +64,7 @@ export const Profile = () => {
                         >
                             <img src={IconButton} alt={'btn'}/>
                             Log Out
-                        </Button>
+                        </Button >
                         {/*<button>Log Out</button>*/}
                     </div>
                 </div>

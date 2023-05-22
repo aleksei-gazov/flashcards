@@ -21,7 +21,7 @@ export const PacksList = () => {
     const headPacks = useAppSelector(selectHeadTablePack)
     const cardPacks = useAppSelector(selectCardPacks)
     const AddNewPack = () => {
-        createPacksList({cardsPack})
+        // createPacksList({cardsPack})
         console.log('new pack')
     }
 

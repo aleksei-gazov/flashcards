@@ -91,7 +91,7 @@ export const InputText: React.FC<SuperInputTextPropsType> = ({
                             // onClick={handleClickShowPassword}
                             // onMouseDown={handleMouseDownPassword}
                         >
-                            <Button onClick={onClickHandlers}>
+                            <Button onClick={onClickHandlers} widthButton={'52px'} heightButton={'24px'}>
                                 SAVE
                             </Button>
                         </IconButton>

@@ -100,11 +100,12 @@ export const NewPassword = () => {
                                 further instructions to email
                             </Typography>
                             <Button
+                                heightButton={'36px'}
+                                widthButton={'100%'}
                                 type={'submit'}
                                 style={{
                                     borderRadius: '30px',
                                     marginTop: '40px',
-                                    width: '100%',
                                     padding: '17px 0',
                                     fontSize: '16px',
                                     fontWeight: '500',

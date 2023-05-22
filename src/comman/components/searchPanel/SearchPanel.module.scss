@@ -1,4 +1,8 @@
 .container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  width: 87vw;
+  margin: 0 auto;
+  border: #cc1439 solid 2px;
 }

@@ -1,9 +1,14 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import TableBody from '@mui/material/TableBody';
 import {styled} from '@mui/material/styles';
 import TableCell, {tableCellClasses} from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import {PacksType} from 'features/packs/packsTypes';
+import {useActions} from 'comman/hook/useActions';
+import {packsThunks} from 'features/packs/packsSlice';
+import {useAppSelector} from 'comman/hook/hooks';
+import {selectHeadTablePack, selectSearchParams} from 'features/packs/packsSelectors';
+import {selectIsLoggedIn} from 'features/auth/auth.selectors';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -50,7 +55,13 @@ type TableBodyType = {
 }
 
 export const TBody: FC<TableBodyType> = ({cardPacks}) => {
-    console.log(cardPacks)
+    const {getPacksList} = useActions({...packsThunks})
+    const searchParams = useAppSelector(selectSearchParams)
+    console.log('tbody')
+
+    useEffect(()=> {
+            getPacksList(searchParams)
+    },[searchParams])
     return (
         <TableBody>
             {cardPacks?.map((row) => (
