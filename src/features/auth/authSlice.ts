@@ -31,6 +31,7 @@ const login = createAppAsyncThunk<{ profile: ProfileType }, ArgLoginType>(
         const {dispatch} = thunkAPI
         return thunkTryCatch(thunkAPI, async () => {
             const res = await authApi.login(arg);
+            console.log(res)
             dispatch(authAction.isLoggedIn(true))
         });
     }
