@@ -25,7 +25,7 @@ function App() {
     }, []);
 
     return (
-        <div className="App">gggg
+        <div className="App">
             <Header/>
             {/*{isLoading && <h1>Loader...</h1>}*/}
             <Navigate/>
