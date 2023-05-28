@@ -4,7 +4,7 @@ import {CreatePack, DeletePack, ResponsGetPacks, SearchParamsType, UpdatePack} f
 export const packsAPI = {
     getPacks: (arg: SearchParamsType) => {
         console.log(arg)
-        console.log("64529b21a9acd92d5ccd75d3")
+        // console.log("64529b21a9acd92d5ccd75d3")
         return instance.get<ResponsGetPacks>('cards/pack'
             , {
                 params: {

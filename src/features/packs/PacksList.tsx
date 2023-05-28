@@ -11,6 +11,8 @@ import s from './PacksList.module.scss'
 import {SearchPanel} from 'comman/components/searchPanel/SearchPanel';
 import {Search} from 'comman/components/search/Search';
 import { Sort } from 'comman/components/sort/Sort';
+import {Navigate} from 'react-router-dom';
+import {selectIsLoggedIn} from 'features/auth/auth.selectors';
 
 let cardsPack = {
     name: 'new'
@@ -18,11 +20,15 @@ let cardsPack = {
 
 export const PacksList = () => {
     const {createPacksList} = useActions({...packsThunks})
+    const isLoggedIn = useAppSelector(selectIsLoggedIn);
     const headPacks = useAppSelector(selectHeadTablePack)
     const cardPacks = useAppSelector(selectCardPacks)
     const AddNewPack = () => {
         // createPacksList({cardsPack})
         console.log('new pack')
+    }
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'} />
     }
 
     return (

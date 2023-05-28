@@ -17,15 +17,24 @@ const ButtonGroup: FC<ButtonGroupType> = ({nameOne, nameTwo}) => {
     console.log(profile._id)
     const getMyPacks = () => {
         setUserId(profile._id)
-
     }
-
+    const getAllPacks = () => {
+        setUserId('')
+    }
     return (
         <div className={s.container}>
-            <Button heightButton={'36px'} widthButton={'98px'} onClick={getMyPacks}>
+            <Button
+                heightButton={'36px'}
+                widthButton={'98px'}
+                onClick={getMyPacks}
+            >
                 {nameOne}
             </Button>
-            <Button heightButton={'36px'} widthButton={'98px'}>
+            <Button
+                heightButton={'36px'}
+                widthButton={'98px'}
+                onClick={getAllPacks}
+            >
                 {nameTwo}
             </Button>
         </div>

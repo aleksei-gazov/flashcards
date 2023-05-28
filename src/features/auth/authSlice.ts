@@ -33,6 +33,7 @@ const login = createAppAsyncThunk<{ profile: ProfileType }, ArgLoginType>(
             const res = await authApi.login(arg);
             console.log(res)
             dispatch(authAction.isLoggedIn(true))
+            return {profile: res.data};
         });
     }
 );
@@ -105,7 +106,9 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(authMe.fulfilled, (state, action) => {
+            .addCase(login.fulfilled, (state, action) => {
+                state.profile = action.payload.profile;
+            }).addCase(authMe.fulfilled, (state, action) => {
                 state.profile = action.payload.profile;
             })
             .addCase(updateName.fulfilled, (state, action) => {
